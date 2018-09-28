@@ -153,7 +153,38 @@ export const constantRouterMap = [
       { path: 'mytable', component: () => import('@/views/mytable/index'), name: 'myTable', meta: { title: 'MyTable', icon: 'table' }}
     ]
   },
+  {
+    path: '/mytest',
+    component: Layout,
+    redirect: '/mytest/index',
+    name: 'mytest',
+    meta: {
+      title: 'Mytest',
+      icon: 'table'
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'mytest',
+        component: () => import('@/views/mytest/mytest'),
+        meta: { title: 'Mytest', icon: 'table' }
+      },
+      {
+        path: 'jsonEditor',
+        name: 'jsonEditor',
+        component: () => import('@/views/mytest/jsonEditor'),
+        meta: { title: 'jsonEditor', icon: 'table' }
+      },
+      {
+        path: 'yamlEditor',
+        name: 'yamlEditor',
+        component: () => import('@/views/mytest/yamlEditor'),
+        meta: { title: 'yamlEditor', icon: 'table' }
+      }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true }
+
 ]
 
 export default new Router({
