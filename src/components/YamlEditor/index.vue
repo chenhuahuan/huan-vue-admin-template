@@ -1,6 +1,53 @@
 <template>
   <div class="yaml-editor">
-    <textarea ref="textarea"/>
+    <!--<textarea ref="textarea"/>-->
+    <textarea id="code" ref="textarea" name="code" >
+      --- # Favorite movies
+      - Casablanca
+      - North by Northwest
+      - The Man Who Wasn't There
+      --- # Shopping list
+      [milk, pumpkin pie, eggs, juice]
+      --- # Indented Blocks, common in YAML data files, use indentation and new lines to separate the key: value pairs
+      name: John Smith
+      age: 33
+      --- # Inline Blocks, common in YAML data streams, use commas to separate the key: value pairs between braces
+      {name: John Smith, age: 33}
+      ---
+      receipt:     Oz-Ware Purchase Invoice
+      date:        2007-08-06
+      customer:
+      given:   Dorothy
+      family:  Gale
+
+      items:
+      - part_no:   A4786
+      descrip:   Water Bucket (Filled)
+      price:     1.47
+      quantity:  4
+
+      - part_no:   E1628
+      descrip:   High Heeled "Ruby" Slippers
+      size:       8
+      price:     100.27
+      quantity:  1
+
+      bill-to:  &id001
+      street: |
+      123 Tornado Alley
+      Suite 16
+      city:   East Centerville
+      state:  KS
+
+      ship-to:  *id001
+
+      specialDelivery:  >
+      Follow the Yellow Brick
+      Road to the Emerald City.
+      Pay no attention to the
+      man behind the curtain.
+      ...
+    </textarea>
   </div>
 </template>
 
@@ -9,10 +56,11 @@ import CodeMirror from 'codemirror'
 import 'codemirror/addon/lint/lint.css'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/rubyblue.css'
-require('script-loader!yaml-lint')
+require('script-loader!js-yaml')
 import 'codemirror/mode/javascript/javascript'
 import 'codemirror/addon/lint/lint'
 import 'codemirror/addon/lint/yaml-lint'
+import 'codemirror/mode/yaml/yaml.js'
 
 export default {
   name: 'YamlEditor',
@@ -20,7 +68,7 @@ export default {
   props: ['value'],
   data() {
     return {
-      YamlEditor: false
+      YamlEditor: CodeMirror.fromTextArea(document.getElementById('code'), {})
     }
   },
   watch: {
@@ -34,7 +82,7 @@ export default {
   mounted() {
     this.YamlEditor = CodeMirror.fromTextArea(this.$refs.textarea, {
       lineNumbers: true,
-      mode: 'application/json',
+      mode: 'yaml',
       gutters: ['CodeMirror-lint-markers'],
       theme: 'rubyblue',
       lint: true
