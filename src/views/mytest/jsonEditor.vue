@@ -3,6 +3,7 @@
     <code>JsonEditor is base on  <a href="https://github.com/codemirror/CodeMirror" target="_blank">CodeMirrorr</a> , lint base on json-lint </code>
     <div class="editor-container">
       <json-editor ref="jsonEditor" v-model="value"/>
+      <!--<json-editor v-model="value"/>-->
     </div>
   </div>
 </template>
@@ -21,6 +22,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style scoped>
