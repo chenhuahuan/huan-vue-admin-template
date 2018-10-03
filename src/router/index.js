@@ -157,7 +157,7 @@ export const constantRouterMap = [
     path: '/mytest',
     component: Layout,
     redirect: '/mytest/index',
-    name: 'mytest',
+    name: 'MyTest',
     meta: {
       title: 'Mytest',
       icon: 'table'
