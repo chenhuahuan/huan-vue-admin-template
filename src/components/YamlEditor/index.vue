@@ -1,6 +1,30 @@
 <template>
   <div class="yaml-editor">
-    <textarea ref="textarea"/>
+    <textarea id="code" ref="textarea" name="code" >
+    - test:
+        name: xxx
+        dependent: xxx
+        request:
+          url: xxx
+          method: GET
+
+          params:
+            param1: xxx
+            param2: xxx
+            param3: xxx
+            param4: xxx
+
+        setup_hooks: []
+        teardown_hooks: []
+
+        keydiff:
+          diff_type: normal
+        validate:
+        - "eq": [status_code,200]
+        - "eq": [content.code,200]
+        - "eq": [content.message,操作成功]
+      </textarea>
+
   </div>
 
 </template>
@@ -16,15 +40,14 @@ import 'codemirror/addon/lint/lint'
 import 'codemirror/addon/lint/yaml-lint'
 import 'codemirror/mode/yaml/yaml.js'
 
+/* eslint-disable */
 export default {
   name: 'YamlEditor',
   /* eslint-disable vue/require-prop-types */
   props: ['value'],
   data() {
-    // const aa = { a: CodeMirror.fromTextArea(document.getElementById('code'), {}) }
-    // alert(JSON.stringify(aa.a))
     return {
-      YamlEditor: false
+      YamlEditor: CodeMirror.fromTextArea(document.getElementById('code'), {})
     }
   },
   watch: {
