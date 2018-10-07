@@ -48,7 +48,7 @@ export const constantRouterMap = [
     children: [
       {
         path: 'complex-table',
-        component: () => import('@/views/mytable/complexTable'),
+        component: () => import('@/views/table/complexTable'),
         name: 'ComplexTable',
         meta: { title: 'complexTable' }
       }

@@ -20,6 +20,13 @@ Vue.use(ElementUI, {
   i18n: (key, value) => i18n.t(key, value)
 })
 
+import * as filters from './filters' // global filters
+
+// register global utility filters.
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
+
 Vue.config.productionTip = false
 
 new Vue({
