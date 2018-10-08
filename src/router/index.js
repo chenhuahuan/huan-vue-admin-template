@@ -36,24 +36,7 @@ export const constantRouterMap = [
       component: () => import('@/views/dashboard/index')
     }]
   },
-  {
-    path: '/table',
-    component: Layout,
-    redirect: '/table/complex-table',
-    name: 'Table',
-    meta: {
-      title: 'Table',
-      icon: 'table'
-    },
-    children: [
-      {
-        path: 'complex-table',
-        component: () => import('@/views/mytable/complexTable'),
-        name: 'ComplexTable',
-        meta: { title: 'complexTable' }
-      }
-    ]
-  },
+
   {
     path: '/example',
     component: Layout,

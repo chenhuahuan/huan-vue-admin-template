@@ -47,7 +47,7 @@ export default {
   props: ['value'],
   data() {
     return {
-      YamlEditor: CodeMirror.fromTextArea(document.getElementById('code'), {})
+      YamlEditor: false
     }
   },
   watch: {
@@ -68,7 +68,7 @@ export default {
       lint: true
     })
 
-    this.YamlEditor.setValue(JSON.stringify(this.value, null, 2))
+    console.log(this.getValue())
     this.YamlEditor.on('change', cm => {
       this.$emit('changed', cm.getValue())
       this.$emit('input', cm.getValue())
