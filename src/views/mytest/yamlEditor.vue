@@ -7,6 +7,7 @@
           <el-button-group >
             <el-button v-if="!isEditing" type="primary" icon="el-icon-edit" @click="edit()">{{ $t('table.edit') }}</el-button>
             <el-button v-else-if="isEditing" type="success" icon="el-icon-check" @click="save()" >{{ $t('table.confirm') }}</el-button>
+            <el-button v-if="isEditing" type="warning" icon="el-icon-check" @click="isEditing = false" >{{ $t('table.cancel') }}</el-button>
             <el-button type="danger" icon="el-icon-delete" >Delete</el-button>
           </el-button-group>
           <br>
