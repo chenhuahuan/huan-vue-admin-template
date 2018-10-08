@@ -5,9 +5,8 @@
       <el-col :span="12" >
         <el-card class="box-card" align="left">
           <el-button-group >
-            <el-button type="primary" icon="el-icon-edit" @click="edit()">{{ $t('table.edit') }}</el-button>
-            <el-button type="success" icon="el-icon-check" @click="save()" >Save</el-button>
-            <el-button type="info" icon="el-icon-share" >Share</el-button>
+            <el-button v-if="!isEditing" type="primary" icon="el-icon-edit" @click="edit()">{{ $t('table.edit') }}</el-button>
+            <el-button v-else-if="isEditing" type="success" icon="el-icon-check" @click="save()" >{{ $t('table.confirm') }}</el-button>
             <el-button type="danger" icon="el-icon-delete" >Delete</el-button>
           </el-button-group>
           <br>
@@ -29,17 +28,22 @@ export default {
   components: { YamlEditor },
   data() {
     return {
-      value: false
+      value: false,
+      isEditing: true
     }
   },
   methods: {
     edit() {
+      this.isEditing = !this.isEditing
       console.log('editing....')
-      console.log(this.$refs.YamlEditor.YamlEditor.getValue())
+      console.log(this.$refs.YamlEditor.getJson())
+      console.log(this.value)
     },
     save() {
+      this.isEditing = !this.isEditing
       console.log('saving....')
-      console.log(this.$refs.YamlEditor.YamlEditor.getValue())
+      console.log(this.$refs.YamlEditor.getJson())
+      console.log(this.value)
     }
   }
 }
