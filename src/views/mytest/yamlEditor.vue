@@ -29,17 +29,17 @@ export default {
   components: { YamlEditor },
   data() {
     return {
-      value: YamlEditor.YamlEditor
+      value: false
     }
   },
   methods: {
     edit() {
       console.log('editing....')
-      console.log(this.value)
+      console.log(this.$refs.YamlEditor.YamlEditor.getValue())
     },
     save() {
       console.log('saving....')
-      console.log(this.value)
+      console.log(this.$refs.YamlEditor.YamlEditor.getValue())
     }
   }
 }

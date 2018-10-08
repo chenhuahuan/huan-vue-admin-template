@@ -47,28 +47,28 @@ export default {
   props: ['value'],
   data() {
     return {
-      YamlEditor: CodeMirror.fromTextArea(document.getElementById('code'), {})
+      YamlEditor: false
     }
   },
-  watch: {
-    value(value) {
-      // alert(value)
-      const editor_value = this.YamlEditor.getValue()
-      if (value !== editor_value) {
-        this.YamlEditor.setValue(JSON.stringify(this.value, null, 2))
-      }
-    }
-  },
+
   mounted() {
-    this.YamlEditor = CodeMirror.fromTextArea(this.$refs.textarea, {
+    this.YamlEditor = CodeMirror.fromTextArea(document.getElementById('code'), {
       lineNumbers: true,
       mode: 'yaml',
       gutters: ['CodeMirror-lint-markers'],
       theme: 'rubyblue',
-      lint: true
+      lint: true,
+      indentUnit: 4,         // 缩进单位为4
     })
 
-    this.YamlEditor.setValue(JSON.stringify(this.value, null, 2))
+    this.YamlEditor.setOption("extraKeys", {
+      // Tab键换成4个空格
+      Tab: function(cm) {
+        var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+        cm.replaceSelection(spaces);
+      }
+    });
+
     this.YamlEditor.on('change', cm => {
       this.$emit('changed', cm.getValue())
       this.$emit('input', cm.getValue())
@@ -77,6 +77,11 @@ export default {
   methods: {
     getValue() {
       return this.YamlEditor.getValue()
+    },
+    getJson() {
+       let yaml_json = jsyaml.safeLoad(this.YamlEditor.getValue())
+       return yaml_json
+
     }
   }
 }
