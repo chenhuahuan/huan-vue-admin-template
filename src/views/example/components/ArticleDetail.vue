@@ -22,7 +22,7 @@
           <el-col :span="24">
             <el-form-item style="margin-bottom: 40px;" prop="title">
               <MDinput v-model="postForm.title" :maxlength="100" name="name" required>
-                标题
+                {{ $t('table.title') }}
               </MDinput>
             </el-form-item>
 

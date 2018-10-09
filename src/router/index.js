@@ -37,30 +37,12 @@ export const constantRouterMap = [
     }]
   },
   {
-    path: '/table',
-    component: Layout,
-    redirect: '/table/complex-table',
-    name: 'Table',
-    meta: {
-      title: 'Table',
-      icon: 'table'
-    },
-    children: [
-      {
-        path: 'complex-table',
-        component: () => import('@/views/table/complexTable'),
-        name: 'ComplexTable',
-        meta: { title: 'complexTable' }
-      }
-    ]
-  },
-  {
     path: '/example',
     component: Layout,
     redirect: '/example/list',
     name: 'Example',
     meta: {
-      title: 'example',
+      title: '接口测试平台',
       icon: 'example'
     },
     children: [
@@ -68,7 +50,9 @@ export const constantRouterMap = [
         path: 'create',
         component: () => import('@/views/example/create'),
         name: 'CreateArticle',
-        meta: { title: 'createArticle', icon: 'edit' }
+        meta: { title: '新增测试用例', icon: 'edit' },
+        hidden: false
+
       },
       {
         path: 'edit/:id(\\d+)',
@@ -81,132 +65,7 @@ export const constantRouterMap = [
         path: 'list',
         component: () => import('@/views/example/list'),
         name: 'ArticleList',
-        meta: { title: 'articleList', icon: 'list' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
-      }
-    ]
-  },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
-  {
-    path: '/mytable',
-    component: Layout,
-    redirect: '/mytable/index',
-    name: 'mytable',
-    meta: {
-      title: 'MyTable',
-      icon: 'table'
-    },
-    children: [
-      { path: 'mytable', component: () => import('@/views/mytable/index'), name: 'myTable', meta: { title: 'MyTable', icon: 'table' }}
-    ]
-  },
-  {
-    path: '/mytest',
-    component: Layout,
-    redirect: '/mytest/index',
-    name: 'MyTest',
-    meta: {
-      title: 'Mytest',
-      icon: 'table'
-    },
-    children: [
-      {
-        path: 'index',
-        name: 'mytest',
-        component: () => import('@/views/mytest/mytest'),
-        meta: { title: 'Mytest', icon: 'table' }
-      },
-      {
-        path: 'jsonEditor',
-        name: 'jsonEditor',
-        component: () => import('@/views/mytest/jsonEditor'),
-        meta: { title: 'jsonEditor', icon: 'table' }
-      },
-      {
-        path: 'yamlEditor',
-        name: 'yamlEditor',
-        component: () => import('@/views/mytest/yamlEditor'),
-        meta: { title: 'yamlEditor', icon: 'table' }
+        meta: { title: '接口用例列表', icon: 'list' }
       }
     ]
   },
