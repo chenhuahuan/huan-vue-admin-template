@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       value: false,
-      isEditing: true
+      isEditing: false
     }
   },
   methods: {
@@ -39,12 +39,14 @@ export default {
       console.log('editing....')
       console.log(this.$refs.YamlEditor.getJson())
       console.log(this.value)
+      this.$refs.YamlEditor.YamlEditor.setOption('readOnly', false)
     },
     save() {
       this.isEditing = !this.isEditing
       console.log('saving....')
       console.log(this.$refs.YamlEditor.getJson())
       console.log(this.value)
+      this.$refs.YamlEditor.YamlEditor.setOption('readOnly', true)
     }
   }
 }

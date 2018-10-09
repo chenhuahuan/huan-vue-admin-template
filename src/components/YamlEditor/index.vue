@@ -50,7 +50,14 @@ export default {
       YamlEditor: false
     }
   },
-
+  watch: {
+    value(value) {
+      const editor_value = this.YamlEditor.getValue()
+      if (value !== editor_value) {
+        this.YamlEditor.setValue(this.value, null, 2)
+      }
+    }
+  },
   mounted() {
     this.YamlEditor = CodeMirror.fromTextArea(document.getElementById('code'), {
       lineNumbers: true,
