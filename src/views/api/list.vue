@@ -2,49 +2,48 @@
   <div class="app-container">
 
     <el-table v-loading.body="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="ID" width="80">
+      <el-table-column align="center" type="index" width="50"/>
+      <el-table-column align="center" label="ID" min-width="140">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-
-      <el-table-column width="180px" align="center" label="Date">
+      <el-table-column align="center" min-width="180px" label="Name">
         <template slot-scope="scope">
-          <span>{{ scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <router-link :to="'/api/edit/'+scope.row.id" class="link-type">
+            <span>{{ scope.row.name }}</span>
+          </router-link>
         </template>
       </el-table-column>
 
-      <el-table-column width="120px" align="center" label="Author">
+      <el-table-column min-width="80px" align="center" label="Author">
         <template slot-scope="scope">
           <span>{{ scope.row.author }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="100px" label="Importance">
+      <el-table-column align="center" min-width="100px" label="Rate">
         <template slot-scope="scope">
-          <svg-icon v-for="n in +scope.row.importance" :key="n" icon-class="star" class="meta-item__icon"/>
+          <svg-icon v-for="n in +scope.row.rate" :key="n" icon-class="star" class="meta-item__icon"/>
         </template>
       </el-table-column>
 
-      <el-table-column class-name="status-col" label="Status" width="110">
+      <el-table-column class-name="status-col" align="center" label="Status" min-width="110">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
         </template>
       </el-table-column>
 
-      <el-table-column min-width="300px" label="Title">
+      <el-table-column min-width="120px" align="center" label="Last Modified">
         <template slot-scope="scope">
-
-          <router-link :to="'/api/edit/'+scope.row.id" class="link-type">
-            <span>{{ scope.row.title }}</span>
-          </router-link>
+          <span>{{ scope.row.last_modified | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
-
-      <el-table-column align="center" label="Actions" width="120">
+      <el-table-column align="center" label="Actions" min-width="180px">
         <template slot-scope="scope">
           <router-link :to="'/api/edit/'+scope.row.id">
-            <el-button type="primary" size="small" icon="el-icon-edit">Edit</el-button>
+            <el-button type="primary" size="small" icon="el-icon-edit">{{ $t('table.edit') }}</el-button>
+            <el-button type="danger" size="small" icon="el-icon-delete" @click="confirmDelete" >{{ $t('table.delete') }}</el-button>
           </router-link>
         </template>
       </el-table-column>
@@ -66,7 +65,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/testcase'
+import { fetchList, fetchTestcaseAll } from '@/api/testcase'
 
 export default {
   name: 'ArticleList',
@@ -92,12 +91,21 @@ export default {
     }
   },
   created() {
-    this.getList()
+    // this.getList()
+    this.getAll()
   },
   methods: {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.total = response.data.total
+        this.listLoading = false
+      })
+    },
+    getAll() {
+      this.listLoading = true
+      fetchTestcaseAll(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
         this.listLoading = false

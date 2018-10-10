@@ -8,6 +8,14 @@ export function fetchList(query) {
   })
 }
 
+export function fetchTestcaseAll(query) {
+  return request({
+    url: '/testcases/all',
+    method: 'get',
+    params: query
+  })
+}
+
 export function fetchTestcase(id) {
   return request({
     url: '/testcase/detail',
