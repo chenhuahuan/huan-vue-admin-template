@@ -35,7 +35,7 @@
       <el-table-column min-width="300px" label="Title">
         <template slot-scope="scope">
 
-          <router-link :to="'/example/edit/'+scope.row.id" class="link-type">
+          <router-link :to="'/api/edit/'+scope.row.id" class="link-type">
             <span>{{ scope.row.title }}</span>
           </router-link>
         </template>
@@ -43,7 +43,7 @@
 
       <el-table-column align="center" label="Actions" width="120">
         <template slot-scope="scope">
-          <router-link :to="'/example/edit/'+scope.row.id">
+          <router-link :to="'/api/edit/'+scope.row.id">
             <el-button type="primary" size="small" icon="el-icon-edit">Edit</el-button>
           </router-link>
         </template>
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/article'
+import { fetchList } from '@/api/testcase'
 
 export default {
   name: 'ArticleList',

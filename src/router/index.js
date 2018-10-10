@@ -37,9 +37,9 @@ export const constantRouterMap = [
     }]
   },
   {
-    path: '/example',
+    path: '/api',
     component: Layout,
-    redirect: '/example/list',
+    redirect: '/api/list',
     name: 'Example',
     meta: {
       title: '接口测试平台',
@@ -48,7 +48,7 @@ export const constantRouterMap = [
     children: [
       {
         path: 'create',
-        component: () => import('@/views/example/create'),
+        component: () => import('@/views/api/create'),
         name: 'CreateArticle',
         meta: { title: '新增测试用例', icon: 'edit' },
         hidden: false
@@ -56,14 +56,14 @@ export const constantRouterMap = [
       },
       {
         path: 'edit/:id(\\d+)',
-        component: () => import('@/views/example/edit'),
+        component: () => import('@/views/api/edit'),
         name: 'EditArticle',
         meta: { title: 'editArticle', noCache: true },
         hidden: true
       },
       {
         path: 'list',
-        component: () => import('@/views/example/list'),
+        component: () => import('@/views/api/list'),
         name: 'ArticleList',
         meta: { title: '接口用例列表', icon: 'list' }
       }

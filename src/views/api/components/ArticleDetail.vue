@@ -91,7 +91,7 @@ import Upload from '@/components/Upload/singleImage3'
 import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky' // 粘性header组件
 import { validateURL } from '@/utils/validate'
-import { fetchArticle } from '@/api/article'
+import { fetchTestcase } from '@/api/testcase'
 import { userSearch } from '@/api/remoteSearch'
 import Warning from './Warning'
 import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
@@ -176,7 +176,7 @@ export default {
   },
   methods: {
     fetchData(id) {
-      fetchArticle(id).then(response => {
+      fetchTestcase(id).then(response => {
         this.postForm = response.data
         // Just for test
         this.postForm.title += `   Article Id:${this.postForm.id}`
@@ -216,7 +216,7 @@ export default {
           type: 'success',
           message: '删除成功!'
         })
-        this.$router.push('/example/list')
+        this.$router.push('/api/list')
       }).catch(() => {
         this.$message({
           type: 'info',
