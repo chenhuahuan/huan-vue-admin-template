@@ -5,8 +5,7 @@
       <sticky :class-name="'sub-navbar '+postForm.status">
         <!--<CommentDropdown v-model="postForm.comment_disabled" />-->
         <!--<PlatformDropdown v-model="postForm.platforms" />-->
-        <!--<SourceUrlDropdown v-model="postForm.source_uri" />-->
-        <el-button v-loading="loading" v-if="isEdit" style="margin-left: 10px;" type="success" icon="el-icon-check" @click="submitForm">{{ $t('table.publish') }}</el-button>
+        <el-button v-loading="loading" v-if="isEdit" style="margin-left: 10px;" type="success" icon="el-icon-check" @click="submitForm">{{ $t('table.confirm') }}</el-button>
         <el-button v-if="!isEdit" type="primary" icon="el-icon-edit" @click="edit">{{ $t('table.edit') }}</el-button>
         <!--<el-button v-else-if="isEdit" type="success" icon="el-icon-check" @click="save()" >{{ $t('table.confirm') }}</el-button>-->
         <el-button v-if="isEdit" type="warning" icon="el-icon-refresh" @click="cancel" >{{ $t('table.cancel') }}</el-button>
@@ -21,8 +20,8 @@
 
           <el-col :span="24">
             <el-form-item style="margin-bottom: 40px;" prop="title">
-              <MDinput v-model="postForm.title" :maxlength="100" name="name" required>
-                {{ $t('table.title') }}
+              <MDinput v-model="postForm.name" :maxlength="100" name="name" required>
+                {{ $t('table.name') }}
               </MDinput>
             </el-form-item>
 
@@ -38,7 +37,7 @@
 
                 <el-col :span="10">
                   <el-form-item label-width="80px" label="创建时间:" class="postInfo-container-item">
-                    <el-date-picker v-model="postForm.display_time" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期时间"/>
+                    <el-date-picker v-model="postForm.date_modified" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期时间"/>
                   </el-form-item>
                 </el-col>
 
@@ -58,17 +57,16 @@
           </el-col>
         </el-row>
 
-        <el-form-item style="margin-bottom: 40px;" label-width="60px" label="关键词:">
-          <el-input :rows="1" v-model="postForm.content_short" type="textarea" class="article-textarea" autosize placeholder="请输入内容"/>
-          <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}字</span>
-        </el-form-item>
+        <!--<el-form-item style="margin-bottom: 40px;" label-width="60px" label="关键词:">-->
+        <!--<el-input :rows="1" v-model="postForm.content_short" type="textarea" class="article-textarea" autosize placeholder="请输入内容"/>-->
+        <!--<span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}字</span>-->
+        <!--</el-form-item>-->
 
         <!--<div class="editor-container">-->
         <!--<Tinymce ref="editor" :height="400" v-model="postForm.content" />-->
         <!--</div>-->
 
         <!--<div style="margin-bottom: 20px;">-->
-        <!--<Upload v-model="postForm.image_uri" />-->
         <!--</div>-->
       </div>
     </el-form>
@@ -76,8 +74,18 @@
     <el-row >
       <el-col :span="12" >
         <el-card class="box-card" align="left">
+          <div>
+            <p>请修改如下yaml语法模板完成创建新用例：</p>
+          </div>
           <div class="editor-container">
             <yaml-editor ref="YamlEditor" v-model="value"/>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="12" >
+        <el-card class="box-card" align="left">
+          <div>
+            <p>辅助信息：依赖关系，业务等</p>
           </div>
         </el-card>
       </el-col>
@@ -90,7 +98,6 @@ import Tinymce from '@/components/Tinymce'
 import Upload from '@/components/Upload/singleImage3'
 import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky' // 粘性header组件
-import { validateURL } from '@/utils/validate'
 import { fetchTestcase } from '@/api/testcase'
 import { userSearch } from '@/api/remoteSearch'
 import Warning from './Warning'
@@ -98,17 +105,6 @@ import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown
 import YamlEditor from '@/components/YamlEditor'
 
 const defaultForm = {
-  status: 'draft',
-  title: '', // 文章题目
-  content: '', // 文章内容
-  content_short: '', // 文章摘要
-  source_uri: '', // 文章外链
-  image_uri: '', // 文章图片
-  display_time: undefined, // 前台展示时间
-  id: undefined,
-  platforms: ['a-platform'],
-  comment_disabled: false,
-  importance: 0
 }
 
 export default {
@@ -132,21 +128,6 @@ export default {
         callback()
       }
     }
-    const validateSourceUri = (rule, value, callback) => {
-      if (value) {
-        if (validateURL(value)) {
-          callback()
-        } else {
-          this.$message({
-            message: '外链url填写不正确',
-            type: 'error'
-          })
-          callback(new Error('外链url填写不正确'))
-        }
-      } else {
-        callback()
-      }
-    }
     return {
       original_value: false,
       value: false,
@@ -154,10 +135,8 @@ export default {
       loading: false,
       userListOptions: [],
       rules: {
-        image_uri: [{ validator: validateRequire }],
         title: [{ validator: validateRequire }],
-        content: [{ validator: validateRequire }],
-        source_uri: [{ validator: validateSourceUri, trigger: 'blur' }]
+        content: [{ validator: validateRequire }]
       }
     }
   },
@@ -169,19 +148,24 @@ export default {
   created() {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
-      this.fetchData(id)
+      if (id) {
+        this.fetchData(id)
+      }
     } else {
       this.postForm = Object.assign({}, defaultForm)
+      this.original_value = this.$refs.YamlEditor.getValue()
     }
   },
   methods: {
     fetchData(id) {
       fetchTestcase(id).then(response => {
-        this.postForm = response.data
+        this.postForm = response.items
         // Just for test
-        this.postForm.title += `   Article Id:${this.postForm.id}`
-        this.postForm.content_short += `   Article Id:${this.postForm.id}`
-        this.original_value = this.$refs.YamlEditor.getValue()
+        this.postForm.case_detail
+        const js2yaml = require('json2yaml')
+        const yamlText = js2yaml.stringify(this.postForm.case_detail)
+        this.original_value = yamlText
+        this.value = this.original_value
       }).catch(err => {
         console.log(err)
       })
@@ -225,8 +209,10 @@ export default {
       })
     },
     submitForm() {
-      this.postForm.display_time = parseInt(this.display_time / 1000)
       console.log(this.postForm)
+      console.log(this.original_value)
+      console.log(this.$refs.YamlEditor.getJson())
+      alert(JSON.stringify(this.$refs.YamlEditor.getJson()))
       this.$refs.postForm.validate(valid => {
         if (valid) {
           this.loading = true

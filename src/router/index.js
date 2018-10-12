@@ -55,7 +55,7 @@ export const constantRouterMap = [
 
       },
       {
-        path: 'edit/:id(\\d+)',
+        path: 'edit/:id',
         component: () => import('@/views/api/edit'),
         name: 'EditArticle',
         meta: { title: 'editArticle', noCache: true },

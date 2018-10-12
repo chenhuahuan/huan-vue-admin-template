@@ -125,7 +125,10 @@ export default {
     draft: 'Draft',
     delete: 'Delete',
     cancel: 'Cancel',
-    confirm: 'Confirm'
+    confirm: 'Confirm',
+    rate: 'Rate',
+    name: 'Name',
+    run: 'Run'
   },
   errorLog: {
     tips: 'Please click the bug icon in the upper right corner',
