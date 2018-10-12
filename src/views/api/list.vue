@@ -136,7 +136,7 @@ export default {
     },
     getAll() {
       this.listLoading = true
-      fetchTestcaseAll(this.listQuery).then(response => {
+      fetchTestcaseAll({}).then(response => {
         this.list = response.items
         // this.total = response.total
         this.listLoading = false

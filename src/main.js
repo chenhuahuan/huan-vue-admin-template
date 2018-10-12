@@ -13,7 +13,7 @@ import router from './router'
 import store from './store'
 
 import '@/icons' // icon
-import '@/permission' // permission control
+// import '@/permission' // permission control
 
 Vue.use(ElementUI, {
   size: Cookies.get('size') || 'medium', // set element-ui default size

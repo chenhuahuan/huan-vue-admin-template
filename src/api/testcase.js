@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-    url: '/testcase/list',
+    url: '/cases/list',
     method: 'get',
     params: query
   })
@@ -10,15 +10,23 @@ export function fetchList(query) {
 
 export function fetchTestcaseAll(query) {
   return request({
-    url: '/testcases/all',
+    url: '/cases/list',
     method: 'get',
+    params: query
+  })
+}
+
+export function casesAdd(query) {
+  return request({
+    url: '/cases/add',
+    method: 'post',
     params: query
   })
 }
 
 export function fetchTestcase(id) {
   return request({
-    url: '/testcase/detail',
+    url: '/cases/detail',
     method: 'get',
     params: { id }
   })
@@ -26,15 +34,15 @@ export function fetchTestcase(id) {
 
 export function fetchPv(pv) {
   return request({
-    url: '/testcase/pv',
+    url: 'cases/pv',
     method: 'get',
     params: { pv }
   })
 }
 
-export function createArticle(data) {
+export function createCase(data) {
   return request({
-    url: '/testcase/create',
+    url: '/cases/create',
     method: 'post',
     data
   })
@@ -42,7 +50,7 @@ export function createArticle(data) {
 
 export function updateArticle(data) {
   return request({
-    url: '/testcase/update',
+    url: '/cases/update',
     method: 'post',
     data
   })
